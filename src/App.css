@@ -34,6 +34,7 @@
 .navIcon-dark{
   color: #9CA3AF;
 }
-.active{
+ .active >button ,.active> p{
   color: #3B82F6;
+  background-color: black;
 }
