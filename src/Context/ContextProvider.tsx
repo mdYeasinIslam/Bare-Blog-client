@@ -7,6 +7,7 @@ import auth from "../Firebase/firebase.init";
 const ContextProvider = ({ children }: ChildrenType) => {
     const [user, setUser] = useState<User>({} as User)
     const [loading,setLoading] = useState(true)
+    const [darkMode,setDarkMode] = useState(false)
     //sign Up
     const signUpAuth = (email: string, password: string) => {
         return createUserWithEmailAndPassword(auth,email,password)
@@ -22,16 +23,16 @@ const ContextProvider = ({ children }: ChildrenType) => {
     const signOutAuth = () => {
         return signOut(auth)
     }
+
     useEffect(() => {
         const subscribe = onAuthStateChanged(auth, currentUser => {
-            console.log(currentUser)
             const userInfo = currentUser as User
             setUser(userInfo)
             setLoading(false)
         })
         return ()=>subscribe()
-    },[])
-    const info: ContextType = { user, loading, setUser, signInAuth, signUpAuth, signOutAuth, googleAuth }
+    }, [])
+    const info: ContextType = { user, loading, setUser, signInAuth, signUpAuth, signOutAuth, googleAuth, darkMode, setDarkMode }
     return (
         <AuthContext.Provider value={info}>
             {children}

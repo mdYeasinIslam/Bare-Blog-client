@@ -5,7 +5,9 @@ export type ChildrenType = {
 }
 export type ContextType = {
     user: User 
-    loading:boolean
+    loading: boolean
+    darkMode: boolean
+    setDarkMode: React.Dispatch<React.SetStateAction<boolean>>
     setUser: React.Dispatch<React.SetStateAction<User>>
     signUpAuth: (email: string, password: string) => Promise<UserCredential>
     signInAuth: (email: string, password: string) => Promise<UserCredential>

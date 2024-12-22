@@ -15,31 +15,24 @@ import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import useContextHook from '../../Hooks/useContextHook';
 import toast from 'react-hot-toast';
+import { IoMdSunny } from 'react-icons/io';
+import { IoMoon } from 'react-icons/io5';
 
 const pages = ['Home', 'Add_Blog', 'All_Blog', 'Featured_Blog', 'WishList'];
 const mobileMenu = ['Home', 'Add_Blog', 'All_Blog', 'Featured_Blog', 'WishList'];
 const authPages = ['Sign_In', 'Sign_Up']
-// const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-    // const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-    const { user, signOutAuth } = useContextHook()
+    const { user, signOutAuth, setDarkMode, darkMode } = useContextHook()
     const navigate =useNavigate()
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
-    // const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    //     setAnchorElUser(event.currentTarget);
-    // };
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
-
-    // const handleCloseUserMenu = () => {
-    //     setAnchorElUser(null);
-    // };
 
     const signOut = () => {
         signOutAuth()
@@ -54,32 +47,14 @@ function Navbar() {
     }
 
     return (
-        <AppBar position="static">
-            <Container maxWidth="xl" className=''>
-                <Toolbar disableGutters>
-                    <ImBlogger className='w-7 h-7 hidden lg:flex' />
-                    <NavLink to={`/`}>
+        <AppBar position="static" className={`${darkMode ? 'dark' : ''} `}>
+            <Container maxWidth="xl" className={` dark:bg-[#1F2937]`} >
+                <Toolbar disableGutters className={` flex justify-between items-center   `}>
 
-                    <Typography
-                        variant="h6"
-                        noWrap
-                            component="a"
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            padding:' 0 0 0 4px',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        BareBlog
-                    </Typography>
-                    </NavLink>
+                    {/* Mobile device menu icons */}
+                    <div className='flex items-center'>
 
-                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                    <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -140,17 +115,16 @@ function Navbar() {
                         </Menu>
                     </Box>
 
-                    <ImBlogger className='w-7 h-7 lg:hidden flex' />
-                    <NavLink to={`/`}>
-
+                    <div className=' flex items-center'>
+                        <ImBlogger className='w-7 h-7' />
+                        <NavLink to={`/`}>
                     <Typography
-                        variant="h5"
+                                variant="h6"
                         noWrap
-                            component="span"
+                                component="a"
                         sx={{
                             mr: 2,
-                            display: { xs: 'flex', md: 'none' },
-                            flexGrow: 1,
+
                             fontFamily: 'monospace',
                             fontWeight: 700,
                             letterSpacing: '.3rem',
@@ -162,6 +136,10 @@ function Navbar() {
                         BareBlog
                     </Typography>
                     </NavLink>
+                        </div>
+                        
+                    </div>
+
                     {/*Navbar middle portion and for lg: navIcons */}
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
@@ -177,15 +155,19 @@ function Navbar() {
                             </NavLink>
                         ))}
                     </Box>
+
                     {/* Navbar end portion */}
-                    <div className='hidden lg:flex'>
+                    <div className='flex gap-5 items-center'>
+
+                        <div >
+
                         {
                             user ?
-                                <>
+                                    <div className='hidden lg:block'>
                                     <Button onClick={signOut} sx={{ color: 'white', display: 'block' }}>Sign_Out</Button>
-                                </>
+                                    </div>
                                 :
-                                <>
+                                    <div className='hidden lg:flex'>
                                     {authPages.map((page) => (
                                         <NavLink to={`${page.toLowerCase()}`} key={page}>
                                             <Button
@@ -197,48 +179,27 @@ function Navbar() {
                                             </Button>
                                         </NavLink>
                                     ))}
-                                </>
+                                    </div>
                         }
 
                     </div>
                     {/* profile */}
-                    <Box sx={{ flexGrow: 0 }}>
+                        <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center',gap:'1rem' }} >
 
-                        {/* <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src={`${user?.photoURL}`} />
-                            </IconButton>
-                        </Tooltip> */}
-                        <Tooltip title=''>
+                            <Tooltip title={`${darkMode?'light':'dark'}`} onClick={() => setDarkMode(!darkMode)}>
+                                <IconButton sx={{ p: 0,color:'white' }}>
+                                {
+                                    darkMode ? <IoMdSunny className='w-7 h-7' /> : <IoMoon className='w-7 h-7' />
+                                }
+                                </IconButton>
+                            </Tooltip >
+                        <Tooltip title='profile'>
                             <IconButton sx={{ p: 0 }}>
                                 <Avatar alt="Remy Sharp" src={`${user?.photoURL}`} />
                             </IconButton>
-                        </Tooltip>
-                        
-                        {/* <Menu
-                            sx={{ mt: '45px' }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu> */}
-
+                            </Tooltip>
                     </Box>
+                    </div>
                 </Toolbar>
             </Container>
         </AppBar>

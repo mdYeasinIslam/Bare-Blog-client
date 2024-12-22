@@ -9,9 +9,9 @@ import useContextHook from "../../Hooks/useContextHook";
 import toast from "react-hot-toast";
 
 const SignIn = () => {
-    const { signInAuth, googleAuth } = useContextHook()
+    const { signInAuth, googleAuth, darkMode } = useContextHook()
     const [showPassword, setShowPassword] = useState(false);
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
+const handleClickShowPassword = () => setShowPassword((show) => !show);
     const navigate = useNavigate()
     const location = useLocation()
     const from = location?.state || '/'
@@ -20,7 +20,6 @@ const SignIn = () => {
         e.preventDefault()
         const form = new FormData(e.currentTarget as HTMLFormElement)
         const formData = Object.fromEntries(form.entries())
-        console.log(formData)
         const email = formData.email as string
         const password = formData.password as string
         signInAuth(email, password)
@@ -43,12 +42,12 @@ const SignIn = () => {
             })
 }
     return (
-        <div className={`grid grid-cols-2`}>
-            <div className="flex flex-col justify-center items-center ">
-                <div className={`bg-[#F3F4F6] p-5 w-[60%] rounded-xl`}>
+        <div className={`flex flex-col-reverse md:grid md:grid-cols-2 ${darkMode ? 'dark' : ''}`}>
+            <div className="flex justify-center items-center my-10 ">
+                <div className={`bg-[#F3F4F6] dark:bg-[#1E293B] dark:text-white mx-2 lg:mx-0 p-5 xl:w-[60%] rounded-xl`}>
                     <h1 className=" text-2xl font-medium text-center my-5">Please Log In your account</h1>
-                    <form onSubmit={handleSubmit} className="flex flex-col gap-y-4">
-                        <FormControl>
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-y-4 ">
+                        <FormControl sx={{ color: 'white' }} className="">
                             <TextField
                                 required
                                 id="outlined-required"
@@ -56,11 +55,22 @@ const SignIn = () => {
                                 type="email"
                                 name='email'
                                 placeholder="Email"
+                                className="dark:text-white "
+                                InputLabelProps={{
+                                    sx: {
+                                        color: darkMode ? 'white' : 'black', // Label color
+                                    },
+                                }}
+                                InputProps={{
+                                    sx: {
+                                        color: darkMode ? 'white' : 'black', // Input text color
+                                    },
+                                }}
                             />
                         </FormControl>
                         
                         <FormControl variant="outlined">
-                            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                            <InputLabel htmlFor="outlined-adornment-password" className="dark:text-white">Password</InputLabel>
                             <OutlinedInput
                                 required
                                 id="outlined-adornment-password"
@@ -68,9 +78,11 @@ const SignIn = () => {
                                 name='password'
                                 placeholder="Password"
                                 label="Your Password"
+                                className="dark:text-white"
                                 endAdornment={
                                     <InputAdornment position="end">
                                         <IconButton
+                                            className="dark:text-white"
                                             aria-label={
                                                 showPassword ? 'hide the password' : 'display the password'
                                             }
@@ -83,6 +95,12 @@ const SignIn = () => {
                                         </IconButton>
                                     </InputAdornment>
                                 }
+                             
+                                inputProps={{
+                                    sx: {
+                                        color: darkMode ? 'white' : 'black', // Input text color
+                                    },
+                                }}
                             />
                         </FormControl>
                         <div className="mt-3">
