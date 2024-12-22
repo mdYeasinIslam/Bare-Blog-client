@@ -12,37 +12,41 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { ImBlogger } from 'react-icons/im';
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import useContextHook from '../../Hooks/useContextHook';
 import toast from 'react-hot-toast';
 
 const pages = ['Home', 'Add_Blog', 'All_Blog', 'Featured_Blog', 'WishList'];
-const mobileMenu = ['Home', 'Add_Blog', 'All_Blog', 'Featured_Blog', 'WishList', 'Sign_In', 'Sign_Up'];
+const mobileMenu = ['Home', 'Add_Blog', 'All_Blog', 'Featured_Blog', 'WishList'];
 const authPages = ['Sign_In', 'Sign_Up']
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+// const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-    const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+    // const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
     const { user, signOutAuth } = useContextHook()
+    const navigate =useNavigate()
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
-    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorElUser(event.currentTarget);
-    };
+    // const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    //     setAnchorElUser(event.currentTarget);
+    // };
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
 
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
+    // const handleCloseUserMenu = () => {
+    //     setAnchorElUser(null);
+    // };
 
     const signOut = () => {
         signOutAuth()
-            .then(() => toast.success('you are successfully loged out'))
+            .then(() => {
+                navigate('/sign_in')
+                toast.success('you are successfully loged out')
+            })
             .catch(e => {
                 console.log(e)
                 toast.error(e.message)
@@ -51,14 +55,15 @@ function Navbar() {
 
     return (
         <AppBar position="static">
-            <Container maxWidth="xl">
+            <Container maxWidth="xl" className=''>
                 <Toolbar disableGutters>
                     <ImBlogger className='w-7 h-7 hidden lg:flex' />
+                    <NavLink to={`/`}>
+
                     <Typography
                         variant="h6"
                         noWrap
-                        component="a"
-                        href="#app-bar-with-responsive-menu"
+                            component="a"
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -72,6 +77,7 @@ function Navbar() {
                     >
                         BareBlog
                     </Typography>
+                    </NavLink>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
@@ -108,16 +114,39 @@ function Navbar() {
                                     </NavLink>
                                 </MenuItem>
                             ))}
+                            {
+                                user ?
+                                    <>
+                                        <MenuItem className=' '>
+                                            <Button onClick={signOut} sx={{ px: 2, textAlign: 'center', color: 'black' }}
+                                                className='navbar-dark'
+                                            >Sign_Out</Button>
+                                        </MenuItem>
+                                    </>
+                                    :
+                                    <>
+                                        {authPages.map((page) => (
+                                            <MenuItem key={page} onClick={handleCloseNavMenu}>
+                                                <NavLink to={`${page.toLowerCase()}`}>
+
+                                                    <Typography sx={{ px: 2, py: 0.5, textAlign: 'center' }}>{page}</Typography>
+                                                </NavLink>
+                                            </MenuItem>
+                                        ))}
+                                    </>
+                            }
+
 
                         </Menu>
                     </Box>
 
                     <ImBlogger className='w-7 h-7 lg:hidden flex' />
+                    <NavLink to={`/`}>
+
                     <Typography
                         variant="h5"
                         noWrap
-                        component="a"
-                        href="#app-bar-with-responsive-menu"
+                            component="span"
                         sx={{
                             mr: 2,
                             display: { xs: 'flex', md: 'none' },
@@ -132,6 +161,7 @@ function Navbar() {
                     >
                         BareBlog
                     </Typography>
+                    </NavLink>
                     {/*Navbar middle portion and for lg: navIcons */}
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
@@ -174,12 +204,18 @@ function Navbar() {
                     {/* profile */}
                     <Box sx={{ flexGrow: 0 }}>
 
-                        <Tooltip title="Open settings">
+                        {/* <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                <Avatar alt="Remy Sharp" src={`${user?.photoURL}`} />
+                            </IconButton>
+                        </Tooltip> */}
+                        <Tooltip title=''>
+                            <IconButton sx={{ p: 0 }}>
+                                <Avatar alt="Remy Sharp" src={`${user?.photoURL}`} />
                             </IconButton>
                         </Tooltip>
-                        <Menu
+                        
+                        {/* <Menu
                             sx={{ mt: '45px' }}
                             id="menu-appbar"
                             anchorEl={anchorElUser}
@@ -200,7 +236,7 @@ function Navbar() {
                                     <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
                                 </MenuItem>
                             ))}
-                        </Menu>
+                        </Menu> */}
 
                     </Box>
                 </Toolbar>

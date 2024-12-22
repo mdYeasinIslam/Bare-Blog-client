@@ -7,12 +7,15 @@ import AddBlogs from "../pages/BlogSection/Add_Blogs/AddBlogs";
 import AllBlogs from "../pages/BlogSection/AllBlogs/AllBlogs";
 import FeaturedBlogs from "../pages/BlogSection/Featured_Blog/FeaturedBlogs";
 import Wishlists from "../pages/BlogSection/Wishlist/Wishlists";
+import ErrorHandler from "../Component/ErrorHandler/ErrorHandler";
+import PrivateRoot from "./PrivateRoot";
 
 const Root = () => {
     const routes = createBrowserRouter([
         {
             path: '/',
             element: <Main />,
+            errorElement:<ErrorHandler/>,
             children: [
                 {
                     path: '/',
@@ -24,7 +27,7 @@ const Root = () => {
                 },
                   {
                     path: '/add_blog',
-                    element:<AddBlogs/>
+                      element: <PrivateRoot><AddBlogs /></PrivateRoot>
                 },
                   {
                     path: '/all_blog',
@@ -32,11 +35,11 @@ const Root = () => {
                 },
                    {
                     path: '/featured_blog',
-                    element:<FeaturedBlogs/>
+                       element: <PrivateRoot><FeaturedBlogs /></PrivateRoot>
                 },
                   {
                     path: '/wishlist',
-                    element:<Wishlists/>
+                    element: <PrivateRoot><Wishlists /></PrivateRoot>
                 },
                 
                 {

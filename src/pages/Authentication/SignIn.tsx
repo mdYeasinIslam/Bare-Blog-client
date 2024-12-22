@@ -3,16 +3,18 @@ import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedIn
 import Lottie from "lottie-react";
 import { FormEvent, useState } from "react";
 import SignInImage from './signIn.json';
-import {  Link, useNavigate } from "react-router-dom";
+import {  Link, useLocation, useNavigate } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
 import useContextHook from "../../Hooks/useContextHook";
 import toast from "react-hot-toast";
 
 const SignIn = () => {
-    const {signInAuth} = useContextHook()
+    const { signInAuth, googleAuth } = useContextHook()
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const navigate = useNavigate()
+    const location = useLocation()
+    const from = location?.state || '/'
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -24,13 +26,22 @@ const SignIn = () => {
         signInAuth(email, password)
             .then(() => {
                 toast.success('Your account is created successfully')
-                navigate('/')
+                navigate(from,{replace:true})
             }).catch(e => {
                 toast.error(e.message)
                 console.error(e)
             })
     }
-  
+    const googleSignIn = () => {
+        googleAuth().then(() => {
+            navigate('/')
+            toast.success('Your are successfully signIn by Google')
+        })
+            .catch(e => {
+                toast.error(e.message)
+                console.error(e)
+            })
+}
     return (
         <div className={`grid grid-cols-2`}>
             <div className="flex flex-col justify-center items-center ">
@@ -78,7 +89,7 @@ const SignIn = () => {
                             <Button type="submit" className="w-full"  variant="contained">Log In</Button>
                         </div>
                         <div className="mt-3 flex justify-around">
-                            <Button variant="outlined">
+                            <Button onClick={googleSignIn} variant="outlined">
                                 <img className="w-7" src="/images/google.png" alt="" />
                             </Button>
                             <Button variant="outlined">

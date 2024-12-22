@@ -9,7 +9,7 @@ import useContextHook from "../../Hooks/useContextHook";
 import toast from "react-hot-toast";
 
 const SignUp = () => {
-    const {signUpAuth} = useContextHook()
+    const { signUpAuth, googleAuth } = useContextHook()
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const navigate = useNavigate()
@@ -33,7 +33,16 @@ const SignUp = () => {
         })
     }
 
-
+    const googleSignIn = () => {
+        googleAuth().then(() => {
+            navigate('/')
+            toast.success('Your are successfully signIn by Google')
+        })
+            .catch(e => {
+                toast.error(e.message)
+                console.error(e)
+            })
+    }
     return (
         <div className={`grid grid-cols-2`}>
             <div className="flex flex-col justify-center items-center ">
@@ -94,7 +103,7 @@ const SignUp = () => {
                         </div>
                         <Divider>OR</Divider>
                         <div className="mt-3 flex justify-around">
-                            <Button variant="outlined">
+                            <Button onClick={googleSignIn} variant="outlined">
                                 <img className="w-7" src="/images/google.png" alt="" />
                             </Button>
                             <Button variant="outlined">

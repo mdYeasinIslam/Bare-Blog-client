@@ -35,6 +35,6 @@
   color: #9CA3AF;
 }
  .active >button ,.active> p{
-  color: #3B82F6;
-  background-color: black;
+  color: white;
+  background-color: #3B82F6;
 }
