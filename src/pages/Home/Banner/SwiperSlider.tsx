@@ -49,24 +49,6 @@ const SwiperSlider = () => {
                                 className="text-xl md:text-3xl xl:text-5xl font-medium leading-tight">The best blogging platform  <motion.span animate={{ color: ['#3c65f5'] }}>for developers and teams.</motion.span></motion.h1>
                            
                             <p className=" xl:w-4/5 text-gray-600 text-xl">Effortlessly run your blog, solo or with a team. Customize everything — <span className='hidden lg:block'>map a domain, subdomain, or use a company sub-path. Already loved by millions of devs worldwide</span>.</p>
-
-                            {/* <div className='flex gap-3'>
-                                <select className='bg-white dark:bg-[#273452] p-4'>
-                                    <option value="Industry">Industry</option>
-                                    <option value="Management">Management</option>
-                                    <option value="Finance">Finance</option>
-                                    <option value="Software">Software</option>
-
-                                </select>
-                                <select className='bg-white dark:bg-[#273452] p-4'>
-                                    <option value="Industry">Location</option>
-                                    <option value="Management">New Yourk</option>
-                                    <option value="Finance">Dhaka</option>
-                                    <option value="Software">London</option>
-                                </select>
-                               
-
-                            </div> */}
                         </div>
                         <div className='h-full'>
                             <figure className="w-1/2 lg:w-1/2">
