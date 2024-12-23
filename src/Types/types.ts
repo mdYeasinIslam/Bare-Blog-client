@@ -14,3 +14,31 @@ export type ContextType = {
     signOutAuth: () => Promise<void>
     googleAuth: () => Promise<UserCredential>
 }
+
+export type BlogType = {
+    author: string
+    categories: [string]
+    commentsCount: number
+    content: string
+    excerpt: string
+    imageUrl: string
+    likes: number
+    publishDate: string
+    readingTime: string
+    tags: [string]
+    title: string
+    _id: string
+    related_blogs: [{
+        author: string
+        commentsCount: number
+        content: string
+        excerpt: string
+        imageUrl: string
+        likes: number
+        publishDate: string
+        readingTime: string
+        tags: [string]
+        title: string
+        sub_blog_id: string
+    }]
+}
