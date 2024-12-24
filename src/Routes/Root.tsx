@@ -9,6 +9,7 @@ import FeaturedBlogs from "../pages/BlogSection/Featured_Blog/FeaturedBlogs";
 import Wishlists from "../pages/BlogSection/Wishlist/Wishlists";
 import ErrorHandler from "../Component/ErrorHandler/ErrorHandler";
 import PrivateRoot from "./PrivateRoot";
+import BlogDetails from "../pages/BlogSection/AllBlogs/BlogDetails";
 
 const Root = () => {
     const routes = createBrowserRouter([
@@ -33,6 +34,12 @@ const Root = () => {
                     path: '/all_blog',
                     element:<AllBlogs/>
                 },
+                 {
+                    path: '/all_blog/:id',
+                     element: <PrivateRoot><BlogDetails /></PrivateRoot>,
+                     loader: ({params})=>fetch(`${import.meta.env.VITE_server}/allBlog/${params.id}`)
+                },
+                
                    {
                     path: '/featured_blog',
                        element: <PrivateRoot><FeaturedBlogs /></PrivateRoot>

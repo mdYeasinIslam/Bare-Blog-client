@@ -12,6 +12,8 @@ const PrivateRoot = ({ children }: ChildrenType) => {
             <Skeleton  width="60%" height={20} />
             <Skeleton  width="80%" height={16} />
             <Skeleton  width="40%" height={16} />
+            <Skeleton  width="40%" height={16} />
+            <Skeleton  width="40%" height={16} />
         </div>
     }
     if (user?.email) {
