@@ -1,20 +1,26 @@
 import { Box, Button, Card, CardContent, CardMedia } from "@mui/material";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { BlogType } from "../../../Types/types";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import axios from "axios";
 import useContextHook from "../../../Hooks/useContextHook";
+import toast from "react-hot-toast";
 
 const BlogDetails = () => {
     const blog = useLoaderData() as BlogType
-    const {user} = useContextHook()
-    const { title, author, content, _id, imageUrl, categories, commentsCount, excerpt, likes, publishDate, readingTime, related_blogs, tags } = blog
+    const { user } = useContextHook()
+     const navigate = useNavigate()
+    const { title, author, content, _id, imageUrl, categories, excerpt,  publishDate, tags } = blog
 
     const addToWishlist = async () => {
-        const wishBlog = {
-            title, author, content,imageUrl,categories,publishDate,tags,excerpt, userEmail:user.email, userName:user?.displayName,userPhoto:user?.photoURL
+        const wishBlogs = {
+          blog_id:_id,  title, author, content,imageUrl,categories,publishDate,tags,excerpt, userEmail:user.email, userName:user?.displayName,userPhoto:user?.photoURL
         }
-        const response = axios.post(`${import.meta.env.VITE_server}/wishlist`,wishBlog)
+        const response = await axios.post(`${import.meta.env.VITE_server}/wishlist`, wishBlogs)
+        if (response) {
+            toast.success('This blog is successfully added to the wish list')
+            navigate('/wishlist')
+        }
         console.log(response)
     }
 

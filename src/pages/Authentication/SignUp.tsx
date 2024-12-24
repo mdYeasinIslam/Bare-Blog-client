@@ -9,7 +9,7 @@ import useContextHook from "../../Hooks/useContextHook";
 import toast from "react-hot-toast";
 
 const SignUp = () => {
-    const { signUpAuth, googleAuth,darkMode } = useContextHook()
+    const { signUpAuth, googleAuth, darkMode, updateAuth } = useContextHook()
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const navigate = useNavigate()
@@ -20,16 +20,26 @@ const SignUp = () => {
         e.preventDefault()
         const form = new FormData(e.currentTarget as HTMLFormElement)
         const formData = Object.fromEntries(form.entries())
+        const name = formData.name as string
+        const photoURL = formData.photoURL as string
         const email = formData.email as string
         const password = formData.password as string
         const passwordRegex = /^(?=.*[A-Z])(?=.*[\W_])(?=.*[0-9]).{6,}$/;
+        console.log(name, photoURL)
+        const profile = { displayName:name, photoURL }
         if (!passwordRegex.test(password)) {
             return toast.error('Password should have at least 6-character,a capital latter,a special character an a numeric character')
         }
         signUpAuth(email, password)
             .then(() => {
-                toast.success('Your account is created successfully')
-                navigate('/')
+                updateAuth(profile)
+                    .then(() => {
+                        toast.success('Your account is created successfully')
+                    }).catch(e => {
+                        toast.error(e.message)
+                        console.error(e)
+                    })
+                    navigate('/')
             }).catch(e => {
                 toast.error(e.message)
             console.error(e)
@@ -54,7 +64,7 @@ const SignUp = () => {
                     <form onSubmit={handleSubmit} className="flex flex-col gap-y-4">
                         <FormControl>
                             <TextField
-                                
+                                required
                                 id="outlined-required"
                                 label="Your Name"
                                 type="name"
@@ -73,6 +83,28 @@ const SignUp = () => {
                             />
 
                         </FormControl>
+                        <FormControl>
+                            <TextField
+                                required
+                                id="outlined-required"
+                                label="Photo URL"
+                                type="url"
+                                name='photoURL'
+                                placeholder="photo-url"
+                                InputLabelProps={{
+                                    sx: {
+                                        color: darkMode ? 'white' : 'black', // Label color
+                                    },
+                                }}
+                                InputProps={{
+                                    sx: {
+                                        color: darkMode ? 'white' : 'black', // Input text color
+                                    },
+                                }}
+                            />
+
+                        </FormControl>
+
                         <FormControl>
                             <TextField
                                 required

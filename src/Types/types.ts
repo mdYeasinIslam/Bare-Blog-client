@@ -7,12 +7,15 @@ export type ContextType = {
     user: User 
     loading: boolean
     darkMode: boolean
+    disable:boolean
     setDarkMode: React.Dispatch<React.SetStateAction<boolean>>
+    setDisable: React.Dispatch<React.SetStateAction<boolean>>
     setUser: React.Dispatch<React.SetStateAction<User>>
     signUpAuth: (email: string, password: string) => Promise<UserCredential>
     signInAuth: (email: string, password: string) => Promise<UserCredential>
     signOutAuth: () => Promise<void>
     googleAuth: () => Promise<UserCredential>
+    updateAuth: (profile: object) => Promise<void>
 }
 
 export type BlogType = {
@@ -41,4 +44,14 @@ export type BlogType = {
         title: string
         sub_blog_id: string
     }]
+}
+export type WishType = {
+    imageUrl: string
+    author: string
+    categories: [string]
+    publishDate: string
+    tags: [string]
+    title: string
+    _id: string
+   
 }

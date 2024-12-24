@@ -3,16 +3,38 @@ import { BlogType } from "../../../Types/types";
 import SendIcon from '@mui/icons-material/Send';
 
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useContextHook from "../../../Hooks/useContextHook";
+import axios from "axios";
+import toast from "react-hot-toast";
+import {  useState } from "react";
 type Prop = {
     blog: BlogType
     idx:number
 }
 const DisplayBlog = ({ blog, idx }: Prop) => {
-    const { title, author, content, _id } = blog
-    
+    const { user } = useContextHook()
+    const navigate = useNavigate()
+    const [disable,setDisable] = useState(false)
+    const { title, author, content, _id, imageUrl, categories, excerpt, publishDate, tags } = blog    
+   
+    const addToWishlist = async () => {
+        const wishBlogs = {
+            blog_id:_id, title, author, content, imageUrl, categories, publishDate, tags, excerpt, userEmail: user.email, userName: user?.displayName, userPhoto: user?.photoURL
+        }
+        const response = await axios.post(`${import.meta.env.VITE_server}/wishlist`, wishBlogs)
+        if (response) {
+            toast.success('This blog is successfully added to the wish list')
+            navigate('/wishlist')
+        }
+        console.log(response)
+        if (response?.data?.blog_id === blog._id) {
+            setDisable(true)
+        }
+    }
+
     return (
-        <div className={`transform transition-transform  duration-500 hover:scale-95   ${idx%3==0 ?`lg:col-span-3`:`${idx ==4 ? 'lg:col-span-3':'lg:col-span-2'}`} `}>
+        <div className={`transform transition-transform  duration-500 hover:scale-95   ${(idx) % 2 == 0 ? `lg:col-span-3` : `  ${(idx) %3==0 && idx>3 ? 'lg:col-span-3' : 'lg:col-span-2' }`} `}>
             <Card className="w-full relative h-full ">
                 <div className="relative h-72  w-full overflow-hidde">
                 <CardMedia
@@ -35,7 +57,7 @@ const DisplayBlog = ({ blog, idx }: Prop) => {
                         </Button>   
                         </Link>
                     
-                        <Button className={`transform transition-transform  duration-1000 hover:scale-105 `} variant="contained" endIcon={<FavoriteIcon />}>
+                        <Button onClick={addToWishlist} className={`transform transition-transform  duration-1000 hover:scale-105 ${disable && 'cursor-not-allowed'}`} variant="contained" endIcon={<FavoriteIcon/>} >
                            Add Wishlist
                         </Button> 
                         

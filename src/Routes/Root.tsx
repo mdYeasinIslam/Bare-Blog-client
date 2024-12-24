@@ -46,7 +46,7 @@ const Root = () => {
                 },
                   {
                     path: '/wishlist',
-                    element: <PrivateRoot><Wishlists /></PrivateRoot>
+                      element: <PrivateRoot><Wishlists /></PrivateRoot>
                 },
                 
                 {
