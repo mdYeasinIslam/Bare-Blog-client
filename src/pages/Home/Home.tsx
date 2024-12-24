@@ -1,14 +1,18 @@
 import Banner from "./Banner/Banner";
 import ExtraSectOne from "./ExtraSect_one/ExtraSectOne";
+import ExtraSectTwo from "./ExtraSect_Two/ExtraSectTwo";
 import LatestBlogs from "./LatestBlogs/LatestBlogs";
+import Newsletter from "./NewsLatter/NewsLetter";
 
 const Home = () => {
     return (
         <div>
             <Banner />
             
-            <ExtraSectOne />
             <LatestBlogs/>
+            <ExtraSectOne />
+            <ExtraSectTwo/>
+            <Newsletter/>
         </div>
     );
 };

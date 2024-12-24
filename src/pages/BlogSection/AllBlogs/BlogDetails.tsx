@@ -17,17 +17,20 @@ const BlogDetails = () => {
     const { user, darkMode } = useContextHook()
     const [searchText, setSearchText] = useState(false)
     const [open, setOpen] = useState(false);
-    const [ afterUpdate,setUpdate] =useState(false)
+    const [afterUpdate, setUpdate] = useState(false)
+    const [error, setError] = useState('')
     const navigate = useNavigate()
     const { title, author, content, _id, imageUrl, categories, excerpt, publishDate, tags, authorEmail } = blog
     useEffect(() => {
-        axios.get(`${import.meta.env.VITE_server}/allBlog/${id}`)
+        axios.get(`${import.meta.env.VITE_server}/allBlog/${id}?email=${user.email}`, { withCredentials: true })
             .then(res => {
+                console.log(res)
                 setBlogData(res.data)
             }).catch(e => {
-            console.log(e)
+                console.log(e.response.data)
+                setError(e.response.data.message)
         })
-    }, [id,afterUpdate])
+    }, [id,afterUpdate,user.email])
 
     const addToWishlist = async () => {
         const wishBlogs = {
@@ -56,6 +59,7 @@ const BlogDetails = () => {
             if (response.data?.acknowledged) {
                 toast.success('Your comment is submitted')
                 setSearchText(true)
+                
             }
         } catch (error) {
             console.log(error)
@@ -70,6 +74,12 @@ const BlogDetails = () => {
     return (
         <Box className={`${darkMode ? 'dark' : ''} `}>
             {
+                error?.length ?
+                    <p className="text-center font-medium text-xl">{error}
+                    </p>
+                    :
+                    <>
+                    {
                 !blog ?
                     <div>
                         loading...
@@ -154,6 +164,9 @@ const BlogDetails = () => {
                     <AllComents blog_id={_id} searchText={searchText} />
                 </div>
             </section>
+                    </>
+                    }
+            
         </Box>
     );
 };

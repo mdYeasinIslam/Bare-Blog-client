@@ -17,14 +17,24 @@ import { useNavigate } from "react-router-dom";
 const Wishlists = () => {
     const [wishlistData, setWishlistData] = useState<WishType[]>([])
     const { user, darkMode } = useContextHook()
+    const [error,setError] = useState('')
     const navigate= useNavigate()
     useEffect(() => {
         const email = user.email as string
         fetchData(email)
     }, [user?.email])
-    const fetchData = async (email: string) => {
-        const response = await axios.get(`${import.meta.env.VITE_server}/wishlist?email=${email}`)
-        setWishlistData(response.data)
+    const fetchData = (email: string) => {
+        axios.get(`${import.meta.env.VITE_server}/wishlist?email=${email}`, { withCredentials: true })
+            .then(response => {
+             console.log(response)
+                setWishlistData(response.data) 
+                setError('')
+            })
+            .catch(e => {
+                console.log(e.response)
+                setError(e.response.data.message)
+        })
+       
     }
     // Define the table columns
     const columns: ColumnDef<WishType>[] = [
@@ -113,10 +123,15 @@ const Wishlists = () => {
         columns,
         getCoreRowModel: getCoreRowModel(),
     });
-
+console.log(error)
     return (
-        <div className={`md:p-4 ${darkMode?'dark':''}`}>
-            <table className="md:min-w-full table-auto border-collapse border border-gray-200 shadow-md dark:bg-[#111827]">
+        <div className={`md:p-4 ${darkMode ? 'dark' : ''}`}>
+            {
+                error?.length ?
+                    <p className="text-center font-medium text-xl">{error}
+                    </p>
+                    :
+                     <table className="md:min-w-full table-auto border-collapse border border-gray-200 shadow-md dark:bg-[#111827]">
                 <thead className="bg-gray-100 dark:bg-[#2e3e61] dark:text-white">
                     {table.getHeaderGroups().map((headerGroup) => (
                         <tr key={headerGroup.id}>
@@ -154,6 +169,8 @@ const Wishlists = () => {
                     ))}
                 </tbody>
             </table>
+            }
+           
         </div>
     );
 };

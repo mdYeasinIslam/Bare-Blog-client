@@ -12,14 +12,22 @@ import {
 
 const FeaturedBlogs = () => {
     const [wishlistData, setWishlistData] = useState<WishType[]>([])
-    const { darkMode } = useContextHook()
-    const {user} = useContextHook()
+    const {user, darkMode } = useContextHook()
+   const [error,setError] = useState('')
     useEffect(() => {
         fetchData(user.email as string)
     }, [user.email])
-    const fetchData = async (email:string) => {
-        const response = await axios.get(`${import.meta.env.VITE_server}/featuredBlog?email=${email}`,{withCredentials:true})
-        setWishlistData(response.data)
+    const fetchData = (email: string) => {
+        console.log(email)
+        axios.get(`${import.meta.env.VITE_server}/featuredBlog?email=${email}`, { withCredentials: true })
+            .then(response => {
+                setWishlistData(response.data)
+                
+            }).catch(e => {
+                console.log(e.response)
+                setError(e.response.data.message)
+            })
+      
     }
     // Define the table columns
     const columns: ColumnDef<WishType>[] = [
@@ -76,7 +84,12 @@ const FeaturedBlogs = () => {
 
     return (
         <div className={`lg:p-4 ${darkMode ? 'dark' : ''} overflow-x-scroll`}>
-            <table
+            {
+                error?.length ?
+                    <p className="text-center font-medium text-xl">{error}
+                    </p>
+                    :
+                         <table
                 style={{ tableLayout: "fixed", width: "100%", borderCollapse: "collapse" }}
                 className="md:min-w-full table-auto border-collapse border border-gray-200 shadow-md dark:bg-[#111827] overflow-x-scroll">
                 <thead className="bg-gray-100 dark:bg-[#2e3e61] dark:text-white">
@@ -123,6 +136,8 @@ const FeaturedBlogs = () => {
                     ))}
                 </tbody>
             </table>
+                }
+       
         </div>
     );
 };

@@ -4,6 +4,7 @@ import { AuthContext, googleProvider } from "./Context";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile, User } from "firebase/auth";
 import auth from "../Firebase/firebase.init";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const ContextProvider = ({ children }: ChildrenType) => {
     const [user, setUser] = useState<User>({} as User)
@@ -31,18 +32,29 @@ const ContextProvider = ({ children }: ChildrenType) => {
     }
 
     useEffect(() => {
-        const subscribe = onAuthStateChanged(auth, async(currentUser) => {
+        const subscribe = onAuthStateChanged(auth, (currentUser) => {
             const userInfo = currentUser as User
             setUser(userInfo)
             if (currentUser?.email) {
-                const response = await axios.post('http://localhost:5000/jwt', { email: currentUser?.email }, { withCredentials: true })
-                console.log(response)
-                setLoading(false);
+                axios.post(`${import.meta.env.VITE_server}/jwt`,{ email: currentUser.email }, { withCredentials: true })
+                    .then(response => {
+                        console.log(response)
+                        setLoading(false)
+                    }).catch(e => {
+                        toast.error('token is not created')
+                        console.log(e)
+                    })
             }
             else {
-                const response = await axios.post('http://localhost:5000/logOut', {}, { withCredentials: true })
-                console.log(response)
+               
+                 axios.post(`${import.meta.env.VITE_server}/logOut`, {}, { withCredentials: true })
+                    .then(response => {
+                      console.log(response)
                 setLoading(false)
+                    }).catch(e => {
+                    console.log(e)
+                })
+              
             }
         })
         return ()=>subscribe()
