@@ -8,8 +8,8 @@ const Footer = () => {
             <Box
                 component="footer"
                 sx={{
-                    
-                    py: 3,
+                    pb: 2,
+                    mb:0,
                     mt: 4,
                     borderTop: '1px solid #e0e0e0',
                 }}

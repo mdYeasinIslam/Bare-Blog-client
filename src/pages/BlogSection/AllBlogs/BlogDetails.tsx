@@ -39,7 +39,10 @@ const BlogDetails = () => {
                 </div>
 
                 <p className="font-medium">Publish Date : {publishDate}</p>
-                <p className="font-medium">Tag : {tags}</p>
+                {
+                    tags && <p className="font-medium">Tag : {tags}</p>
+                }
+                
                 <Button onClick={addToWishlist} className={`transform transition-transform  duration-1000 hover:scale-105 `} variant="contained" endIcon={<FavoriteIcon />}>
                     Add Wishlist
                 </Button> 
@@ -49,7 +52,7 @@ const BlogDetails = () => {
                     component="img"
                     className="w-full h-full"
                     image={imageUrl}
-                    alt="Live from space album cover"
+                    alt="Blog image"
                 />
             </Box>
         </Card>
