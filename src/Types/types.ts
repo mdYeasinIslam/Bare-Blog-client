@@ -46,12 +46,12 @@ export type BlogType = {
     }]
 }
 export type WishType = {
-    imageUrl: string
+    _id: string
     author: string
+    title: string
+    imageUrl: string
     categories: [string]
     publishDate: string
     tags: [string]
-    title: string
-    _id: string
    
 }
