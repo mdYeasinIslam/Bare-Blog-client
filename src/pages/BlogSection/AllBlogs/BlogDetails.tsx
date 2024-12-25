@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 
 const BlogDetails = () => {
     const blog = useLoaderData() as BlogType
-    const { user } = useContextHook()
+    const { user,darkMode } = useContextHook()
      const navigate = useNavigate()
     const { title, author, content, _id, imageUrl, categories, excerpt,  publishDate, tags } = blog
 
@@ -25,8 +25,8 @@ const BlogDetails = () => {
     }
 
     return (
-        <Card className="my-10 max-w-6xl mx-auto grid grid-cols-2 drop-shadow-xl border-2">
-            <CardContent>
+        <Card className={`my-10 max-w-6xl mx-auto grid grid-cols-2 drop-shadow-xl border-2 ${darkMode ? 'dark': ''}`}>
+            <CardContent className="dark:bg-[#1F2937] dark:text-[#F9FAFB]">
                 <h1 className="text-4xl font-medium ">{title}</h1>
                 <div className="flex gap-4 text-2xl font-medium">Category: {categories.map((category, idx) => <span key={idx}>
                     "{category}"

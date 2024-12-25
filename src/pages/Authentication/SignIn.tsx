@@ -59,6 +59,7 @@ const handleClickShowPassword = () => setShowPassword((show) => !show);
                                 InputLabelProps={{
                                     sx: {
                                         color: darkMode ? 'white' : 'black', // Label color
+                                        bgcolor: darkMode ? '#1E293B' : ''
                                     },
                                 }}
                                 InputProps={{

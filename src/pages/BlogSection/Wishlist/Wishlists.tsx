@@ -11,6 +11,7 @@ import {
 } from '@tanstack/react-table';
 import { FaTrash } from 'react-icons/fa';
 import { CiEdit } from "react-icons/ci";
+import toast from "react-hot-toast";
 
 const Wishlists = () => {
     const [wishlistData, setWishlistData] = useState<WishType[]>([])
@@ -69,8 +70,7 @@ const Wishlists = () => {
             cell: ({ row }) => (
                 <div className="flex gap-2">
                     <button
-                        className="text-red-500 hover:text-red-700"
-                        onClick={() => handleDelete(row.original)}
+                        className=" hover:text-red-700"
                     >
                     <CiEdit className="w-6 h-5"/>
                     </button>
@@ -90,8 +90,17 @@ const Wishlists = () => {
 
     // Handle delete functionality
     const handleDelete = (rowData: WishType) => {
-        console.log('Deleting:', rowData);
-        // Add your delete logic here (e.g., update state or make API call)
+        axios.delete(`${import.meta.env.VITE_server}/wishlist/${rowData._id}`)
+            .then(response => {
+                console.log(response)
+                if (response.data.acknowledged === true) {
+                    fetchData(user.email as string)
+                    toast.success('Blog deleted form wishlist successfully')
+                }
+            }).catch(e => {
+                console.log(e)
+                toast.error(e.message)
+            })
     };
 
     // Set up the table

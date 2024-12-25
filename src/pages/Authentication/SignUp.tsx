@@ -73,6 +73,7 @@ const SignUp = () => {
                                 InputLabelProps={{
                                     sx: {
                                         color: darkMode ? 'white' : 'black', // Label color
+                                        bgcolor: darkMode ? '#1E293B' : ''
                                     },
                                 }}
                                 InputProps={{
@@ -90,15 +91,19 @@ const SignUp = () => {
                                 label="Photo URL"
                                 type="url"
                                 name='photoURL'
+                                
                                 placeholder="photo-url"
                                 InputLabelProps={{
                                     sx: {
                                         color: darkMode ? 'white' : 'black', // Label color
+                                        bgcolor: darkMode ?'#1E293B':''
                                     },
                                 }}
                                 InputProps={{
                                     sx: {
                                         color: darkMode ? 'white' : 'black', // Input text color
+                                       
+
                                     },
                                 }}
                             />
@@ -116,6 +121,7 @@ const SignUp = () => {
                                 InputLabelProps={{
                                     sx: {
                                         color: darkMode ? 'white' : 'black', // Label color
+                                        bgcolor: darkMode ? '#1E293B' : ''
                                     },
                                 }}
                                 InputProps={{
