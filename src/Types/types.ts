@@ -37,6 +37,7 @@ export type BlogType = {
 export type WishType = {
     _id: string
     author: string
+    blog_id:string
     title: string
     excerpt:string
     imageUrl: string

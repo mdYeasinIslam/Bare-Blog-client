@@ -23,8 +23,10 @@ const handleClickShowPassword = () => setShowPassword((show) => !show);
         const email = formData.email as string
         const password = formData.password as string
         signInAuth(email, password)
-            .then(() => {
+            .then(async() => {
                 toast.success('Your account is created successfully')
+                // const response = await axios.post(`${import.meta.env.VITE_server}/jwt`, email, { withCredentials: true })
+                // console.log(response)
                 navigate(from,{replace:true})
             }).catch(e => {
                 toast.error(e.message)

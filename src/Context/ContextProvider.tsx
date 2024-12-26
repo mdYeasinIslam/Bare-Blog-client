@@ -3,6 +3,7 @@ import { ChildrenType, ContextType } from "../Types/types";
 import { AuthContext, googleProvider } from "./Context";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile, User } from "firebase/auth";
 import auth from "../Firebase/firebase.init";
+import axios from "axios";
 
 const ContextProvider = ({ children }: ChildrenType) => {
     const [user, setUser] = useState<User>({} as User)
@@ -30,10 +31,19 @@ const ContextProvider = ({ children }: ChildrenType) => {
     }
 
     useEffect(() => {
-        const subscribe = onAuthStateChanged(auth, currentUser => {
+        const subscribe = onAuthStateChanged(auth, async(currentUser) => {
             const userInfo = currentUser as User
             setUser(userInfo)
-            setLoading(false)
+            if (currentUser?.email) {
+                const response = await axios.post('http://localhost:5000/jwt', { email: currentUser?.email }, { withCredentials: true })
+                console.log(response)
+                setLoading(false);
+            }
+            else {
+                const response = await axios.post('http://localhost:5000/logOut', {}, { withCredentials: true })
+                console.log(response)
+                setLoading(false)
+            }
         })
         return ()=>subscribe()
     }, [])

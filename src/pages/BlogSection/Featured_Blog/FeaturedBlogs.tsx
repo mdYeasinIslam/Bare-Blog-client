@@ -13,11 +13,12 @@ import {
 const FeaturedBlogs = () => {
     const [wishlistData, setWishlistData] = useState<WishType[]>([])
     const { darkMode } = useContextHook()
+    const {user} = useContextHook()
     useEffect(() => {
-        fetchData()
-    }, [])
-    const fetchData = async () => {
-        const response = await axios.get(`${import.meta.env.VITE_server}/featuredBlog`)
+        fetchData(user.email as string)
+    }, [user.email])
+    const fetchData = async (email:string) => {
+        const response = await axios.get(`${import.meta.env.VITE_server}/featuredBlog?email=${email}`,{withCredentials:true})
         setWishlistData(response.data)
     }
     // Define the table columns

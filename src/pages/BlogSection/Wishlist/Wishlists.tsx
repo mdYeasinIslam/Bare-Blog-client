@@ -12,10 +12,12 @@ import {
 import { FaTrash } from 'react-icons/fa';
 import { CiEdit } from "react-icons/ci";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Wishlists = () => {
     const [wishlistData, setWishlistData] = useState<WishType[]>([])
-    const { user,darkMode } = useContextHook()
+    const { user, darkMode } = useContextHook()
+    const navigate= useNavigate()
     useEffect(() => {
         const email = user.email as string
         fetchData(email)
@@ -69,7 +71,7 @@ const Wishlists = () => {
             header: 'Delete',
             cell: ({ row }) => (
                 <div className="flex gap-2">
-                    <button
+                    <button onClick={()=>goDetails(row.original)}
                         className=" hover:text-red-700"
                     >
                     <CiEdit className="w-6 h-5"/>
@@ -87,7 +89,10 @@ const Wishlists = () => {
             ),
         },
     ];
-
+    const goDetails = (rowData: WishType) => {
+        console.log(rowData)
+        navigate(`/all_blog/${rowData?.blog_id}`)
+    }
     // Handle delete functionality
     const handleDelete = (rowData: WishType) => {
         axios.delete(`${import.meta.env.VITE_server}/wishlist/${rowData._id}`)
@@ -101,7 +106,7 @@ const Wishlists = () => {
                 toast.error(e.message)
             })
     };
-
+    
     // Set up the table
     const table = useReactTable({
         data: wishlistData,
