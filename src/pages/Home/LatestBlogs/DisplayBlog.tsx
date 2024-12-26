@@ -27,20 +27,19 @@ const DisplayBlog = ({ blog, idx }: Prop) => {
             toast.success('This blog is successfully added to the wish list')
             navigate('/wishlist')
         }
-        console.log(response)
         if (response?.data?.blog_id === blog._id) {
             setDisable(true)
         }
     }
 
     return (
-        <div className={`transform transition-transform  duration-500 hover:scale-95   ${(idx) % 2 == 0 ? `lg:col-span-3` : `  ${(idx) %3==0 && idx>3 ? 'lg:col-span-3' : 'lg:col-span-2' }`} `}>
+        <div className={`transform transition-transform  duration-500 hover:scale-95   ${idx % 2 == 0 ? `lg:col-span-3` : `  lg:col-span-2 `} `}>
             <Card className="w-full relative h-full ">
                 <div className="relative h-72  w-full overflow-hidde">
                 <CardMedia
                     component="img"
-                    image={blog.imageUrl}
-                    className="w-full h-full brightness-[20%] object-contain "
+                    image={blog?.imageUrl}
+                        className={`w-full h-full brightness-[20%] object-contain  ${!blog?.imageUrl ? '' : 'bg-gray-400'}`}
                     alt="Paella dish"
                 />
                 </div>

@@ -1,21 +1,33 @@
 import { Box, Button, ButtonGroup, Card, CardContent, CardMedia, Divider, FormControl, Input, InputAdornment, InputLabel } from "@mui/material";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import {useLoaderData, useNavigate, useParams } from "react-router-dom";
 import { BlogType } from "../../../Types/types";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import axios from "axios";
 import useContextHook from "../../../Hooks/useContextHook";
 import toast from "react-hot-toast";
-import {  FormEvent, useState } from "react";
+import {  FormEvent, useEffect, useState } from "react";
 import { AccountCircle } from "@mui/icons-material";
 import AllComents from "../CommentSection/AllComents";
+import UpdateBlog from "./UpdateBlog";
 
 const BlogDetails = () => {
-    const blog = useLoaderData() as BlogType
+    const blogData = useLoaderData() as BlogType
+    const { id } = useParams()
+    const [blog,setBlogData] =useState<BlogType>(blogData)
     const { user, darkMode } = useContextHook()
     const [searchText, setSearchText] = useState(false)
-
-     const navigate = useNavigate()
-    const { title, author, content, _id, imageUrl, categories, excerpt,  publishDate, tags } = blog
+    const [open, setOpen] = useState(false);
+    const [ afterUpdate,setUpdate] =useState(false)
+    const navigate = useNavigate()
+    const { title, author, content, _id, imageUrl, categories, excerpt, publishDate, tags, authorEmail } = blog
+    useEffect(() => {
+        axios.get(`${import.meta.env.VITE_server}/allBlog/${id}`)
+            .then(res => {
+                setBlogData(res.data)
+            }).catch(e => {
+            console.log(e)
+        })
+    }, [id,afterUpdate])
 
     const addToWishlist = async () => {
         const wishBlogs = {
@@ -26,12 +38,10 @@ const BlogDetails = () => {
             toast.success('This blog is successfully added to the wish list')
             navigate('/wishlist')
         }
-        console.log(response)
     }
     const commentHandler = async(event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         setSearchText(false)
-        // console.log(event.currentTarget.comment.value,'clicked')
         
         const comment = event.currentTarget.comment.value as string
         const commentObj = {
@@ -52,13 +62,26 @@ const BlogDetails = () => {
             toast.error('There is a problem .please try again')
         }
     }
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => {
+        setOpen(false)
+        setUpdate(!afterUpdate)
+    };
     return (
-        <Box className={`${darkMode ? 'dark' : ''}`}>
+        <Box className={`${darkMode ? 'dark' : ''} `}>
+            {
+                !blog ?
+                    <div>
+                        loading...
+                    </div>
+                    :
 
+            <UpdateBlog open={open} handleClose={handleClose} blog={blog} />
+            }
             <Card className={`my-10 max-w-6xl mx-auto grid grid-cols-2 drop-shadow-xl border-2 `}>
             <CardContent className="dark:bg-[#1F2937] dark:text-[#F9FAFB]">
                 <h1 className="text-4xl font-medium ">{title}</h1>
-                <div className="flex gap-4 text-2xl font-medium">Category: {categories.map((category, idx) => <span key={idx}>
+                <div className="flex gap-4 text-2xl font-medium">Category: {categories?.map((category, idx) => <span key={idx}>
                     "{category}"
                 </span>)}
                 </div>
@@ -72,10 +95,20 @@ const BlogDetails = () => {
                 {
                     tags && <p className="font-medium">Tag : {tags}</p>
                 }
-                
-                <Button onClick={addToWishlist} className={`transform transition-transform  duration-1000 hover:scale-105 `} variant="contained" endIcon={<FavoriteIcon />}>
+                    <ButtonGroup className="flex gap-3">
+                        {user.email !== authorEmail ?
+                            null :
+                            
+                        <Button onClick={handleOpen}  className={`transform transition-transform  duration-1000 hover:scale-105 `} variant="contained">
+                            Update
+                        </Button> 
+                        }
+
+                        <Button onClick={addToWishlist} className={`transform transition-transform  duration-1000 hover:scale-105 `} variant="contained" endIcon={<FavoriteIcon />}>
                     Add Wishlist
-                </Button> 
+                        </Button> 
+
+                    </ButtonGroup>
             </CardContent>
             <Box className={`relative h-full  w-full overflow-hidden`}>
                 <CardMedia
@@ -87,16 +120,17 @@ const BlogDetails = () => {
             </Box>
             </Card>
             <Divider className='font-medium text-xl dark:text-white'>Comment Area</Divider>
-            <section className={`w-1/2 mx-10 flex flex-col gap-5`}>
+            <section className={`md:w-1/2 mx-5 md:mx-10 flex flex-col gap-5`}>
                 <form onSubmit={commentHandler}>
                     <FormControl variant="standard" className="w-full ">
                         <InputLabel htmlFor="input-with-icon-adornment" className='dark:text-[#F9FAFB]'>
-                            With a start adornment
+                            Add your comment
                         </InputLabel>
                         <Input
                             id="input-with-icon-adornment"
-                            placeholder="Add your comment"
+                            placeholder={user?.email == authorEmail ? 'You can not comment on you blog' : "Add your comment"}
                             className="dark:text-[#F9FAFB]"
+                            disabled={user?.email == authorEmail ? true : false}  
                             name="comment"
                             startAdornment={
                                 <InputAdornment position="start" className="my-2 ">
@@ -113,7 +147,7 @@ const BlogDetails = () => {
                         <ButtonGroup className="flex gap-4 mt-2">
                             <Button variant="outlined">Cancel</Button>
                             <Button 
-                                variant="outlined" type="submit">Comment</Button>
+                            variant="outlined" type="submit" disabled={user?.email == authorEmail ? true : false}  >Comment</Button>
                         </ButtonGroup>
                 </form>
                 <div>

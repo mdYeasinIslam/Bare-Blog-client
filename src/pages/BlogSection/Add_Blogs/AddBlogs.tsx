@@ -24,13 +24,15 @@ const AllBlogs = () => {
 
         const transformedFormData = {
             ...formData,
-            categories: categoryArray
+            categories: categoryArray,
+            
         };
         axios.post(`${import.meta.env.VITE_server}/allBlog`, transformedFormData)
             .then(response => {
-                console.log(response)
-                toast.success('Your Blog is successfully published')
-                navigate('/all_blog')
+                if (response.data) {
+                    toast.success('Your Blog is successfully published')
+                    navigate('/all_blog')
+                }
             }).catch(e => {
                 toast.error(e.message)
                 console.error(e)
@@ -151,6 +153,32 @@ const AllBlogs = () => {
                                 }}
                             />
                         </FormControl>
+                          <FormControl>
+                            <TextField
+                                
+                                id="outlined-disabled"
+                                label="Author Email"
+                                name='authorEmail'
+                                className="dark:text-white"
+                                defaultValue={user.email}
+                                slotProps={{
+                                    input: {
+                                        readOnly: true,
+                                    },
+                                }}
+                                InputLabelProps={{
+                                    sx: {
+                                        color: darkMode ? 'white' : 'black', // Label color
+                                    },
+                                }}
+                                InputProps={{
+                                    sx: {
+                                        color: darkMode ? 'white' : 'black', // Input text color
+                                    },
+                                }}
+                            />
+                        </FormControl>
+                        
                         <FormControl>
                             <TextField
                                 id="outlined-disabled"

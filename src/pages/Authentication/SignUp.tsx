@@ -25,7 +25,7 @@ const SignUp = () => {
         const email = formData.email as string
         const password = formData.password as string
         const passwordRegex = /^(?=.*[A-Z])(?=.*[\W_])(?=.*[0-9]).{6,}$/;
-        console.log(name, photoURL)
+        
         const profile = { displayName:name, photoURL }
         if (!passwordRegex.test(password)) {
             return toast.error('Password should have at least 6-character,a capital latter,a special character an a numeric character')

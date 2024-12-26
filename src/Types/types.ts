@@ -20,6 +20,7 @@ export type ContextType = {
 
 export type BlogType = {
     author: string
+    authorEmail:string
     categories: [string]
     commentsCount: number
     content: string
@@ -31,24 +32,13 @@ export type BlogType = {
     tags: [string]
     title: string
     _id: string
-    related_blogs: [{
-        author: string
-        commentsCount: number
-        content: string
-        excerpt: string
-        imageUrl: string
-        likes: number
-        publishDate: string
-        readingTime: string
-        tags: [string]
-        title: string
-        sub_blog_id: string
-    }]
+  
 }
 export type WishType = {
     _id: string
     author: string
     title: string
+    excerpt:string
     imageUrl: string
     categories: [string]
     publishDate: string

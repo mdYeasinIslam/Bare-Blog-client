@@ -29,7 +29,6 @@ const AllBLogs = () => {
         setLatestBlogs(response.data)
     }
     const searchByTitle = (event: ChangeEvent<HTMLInputElement>) => {
-        console.log(event.target.value)
         setSearchText(event.target.value)
     }
     const handleChange = (event: SelectChangeEvent) => {

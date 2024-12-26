@@ -37,7 +37,6 @@ const ContextProvider = ({ children }: ChildrenType) => {
         })
         return ()=>subscribe()
     }, [])
-    console.log(user)
 
     const info: ContextType = { user, loading, setUser, signInAuth, signUpAuth, signOutAuth, googleAuth, updateAuth, darkMode, setDarkMode, disable, setDisable }
     return (

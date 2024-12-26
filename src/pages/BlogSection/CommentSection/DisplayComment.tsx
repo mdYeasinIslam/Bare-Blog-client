@@ -5,16 +5,19 @@ import useContextHook from "../../../Hooks/useContextHook";
 import axios from "axios";
 type Prop = {
     comment: CommentType
+    setAfterDelete: React.Dispatch<React.SetStateAction<boolean>>
 }
-const DisplayComment = ({ comment }: Prop) => {
+const DisplayComment = ({ comment, setAfterDelete }: Prop) => {
     // const { blog_id,comment,userEmail ,userName, userPhoto} =comment
     const { user } = useContextHook()
     const deleteHandler = async() => {
-        console.log('d')
         if (user.email === comment.userEmail) {
             const response =await axios.delete(`${import.meta.env.VITE_server}/allComment/${comment._id}`)
-            console.log(response)
+            if (response.data) {
+                setAfterDelete(true)
+            }
         }
+        
     }
     return (
         <Box>
@@ -33,9 +36,10 @@ const DisplayComment = ({ comment }: Prop) => {
                     color="error"
                     size='small'
                     onClick={deleteHandler}
+                    disabled={user.email !== comment.userEmail && true}
                     className="text-red-500 hover:text-red-700 flex hover:bg-red-100"
                 // onClick={() => handleDelete(row.original)}
-                ><span>Delete</span>
+                ><span className="hidden md:flex">Delete</span>
                     <FaTrash className="w-6 h-5" />
 
                 </Button>

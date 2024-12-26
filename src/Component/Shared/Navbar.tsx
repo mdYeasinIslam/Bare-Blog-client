@@ -41,7 +41,7 @@ function Navbar() {
                 toast.success('you are successfully loged out')
             })
             .catch(e => {
-                console.log(e)
+               
                 toast.error(e.message)
             })
     }
