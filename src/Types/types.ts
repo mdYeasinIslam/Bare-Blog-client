@@ -55,3 +55,12 @@ export type WishType = {
     tags: [string]
    
 }
+export type CommentType = {
+    _id: string
+    blog_id: string
+    comment: string
+    userEmail: string
+    userPhoto: string
+    userName: string
+
+}

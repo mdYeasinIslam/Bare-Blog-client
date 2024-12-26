@@ -25,11 +25,9 @@ const AllBLogs = () => {
             setNoFound('')
             return setLatestBlogs(filter)
         }
-        console.log(response)
         setNoFound('')
         setLatestBlogs(response.data)
     }
-    console.log(noFound)
     const searchByTitle = (event: ChangeEvent<HTMLInputElement>) => {
         console.log(event.target.value)
         setSearchText(event.target.value)

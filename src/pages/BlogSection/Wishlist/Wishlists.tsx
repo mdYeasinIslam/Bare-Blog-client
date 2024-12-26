@@ -93,8 +93,8 @@ const Wishlists = () => {
         axios.delete(`${import.meta.env.VITE_server}/wishlist/${rowData._id}`)
             .then(response => {
                 console.log(response)
-                if (response.data.acknowledged === true) {
-                    fetchData(user.email as string)
+                if (response.data?.acknowledged === true) {
+                    fetchData(user?.email as string)
                     toast.success('Blog deleted form wishlist successfully')
                 }
             }).catch(e => {
