@@ -1,8 +1,7 @@
 # "BareBlog"
+
 ![BareBlogs](https://i.ibb.co.com/nqYYVqYL/bare-Blogs.png)
-<p align="center">
-  <img src="https://i.ibb.co.com/nqYYVqYL/bare-Blogs.png" alt="My Portfolio" width="600"/>
-</p>
+
 
 # Short descroption:
 This site is build for collecting Blogs about Technology. User can share their opition or can share their experience about different technology and it will pusblish as a blog.
