@@ -1,6 +1,5 @@
 # "BareBlog"
 
-![BareBlogs](https://i.ibb.co.com/nqYYVqYL/bare-Blogs.png)
 
 
 # Short descroption:
