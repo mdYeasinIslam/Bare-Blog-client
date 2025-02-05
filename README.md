@@ -18,9 +18,7 @@ User can control his/her blog
 
 # Client side 
 # Live link : https://a11-bareblog.web.app
-# github link : https://github.com/programming-hero-web-course2/b10a11-client-side-mdYeasinIslam
+
 
 # Server side 
 # live link : https://b10-bare-blog-server.vercel.app
-
-# github-link: https://github.com/programming-hero-web-course2/b10a11-server-side-mdYeasinIslam
