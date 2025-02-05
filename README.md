@@ -1,6 +1,6 @@
 # "BareBlog"
 
-
+![My Blogs](https://i.ibb.co.com/nqYYVqYL/bare-Blogs.png)
 
 # Short descroption:
 This site is build for collecting Blogs about Technology. User can share their opition or can share their experience about different technology and it will pusblish as a blog.
