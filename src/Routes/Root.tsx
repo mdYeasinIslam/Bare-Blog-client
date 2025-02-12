@@ -12,6 +12,7 @@ import PrivateRoot from "./PrivateRoot";
 import BlogDetails from "../pages/BlogSection/AllBlogs/BlogDetails";
 import { SecondLayout } from "../pages/Layout/SecondLayout";
 import About from "../pages/About/About";
+import { Profile } from "../pages/Profile/Profile";
 
 const Root = () => {
     const routes = createBrowserRouter([
@@ -70,6 +71,10 @@ const Root = () => {
                 {
                     path: '/auth/sign_up',
                     element:<SignUp/>
+                },
+                {
+                    path: '/auth/profile',
+                    element:<PrivateRoot><Profile/></PrivateRoot>
                 }
             ]
         }

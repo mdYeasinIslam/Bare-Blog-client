@@ -23,7 +23,7 @@ const ErrorPage = () => {
         animate={{ scale: 1 }}
         transition={{ duration: 0.5 }}
       >
-        404
+        {status}
       </motion.h1>
       
       {/* Error Message */}

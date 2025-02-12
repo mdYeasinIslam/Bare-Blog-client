@@ -12,7 +12,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { ImBlogger } from 'react-icons/im';
 import { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import useContextHook from '../../Hooks/useContextHook';
 import toast from 'react-hot-toast';
 import { IoMdSunny } from 'react-icons/io';
@@ -37,7 +37,7 @@ function Navbar() {
     const signOut = () => {
         signOutAuth()
             .then(() => {
-                navigate('/sign_in')
+                navigate('/auth/sign_in')
                 toast.success('you are successfully loged out')
             })
             .catch((e : any) => {
@@ -112,7 +112,7 @@ function Navbar() {
                                     user ?
                                         <>
                                             <MenuItem className=' '>
-                                                <Button onClick={signOut} sx={{ px: 2, textAlign: 'center', color: 'black' }}
+                                                <Button variant='contained' onClick={signOut} sx={{ px: 2, textAlign: 'center', color: 'black' }}
                                                     className='navbar-dark'
                                                 >Sign_Out</Button>
                                             </MenuItem>
@@ -203,7 +203,7 @@ function Navbar() {
                         {
                             user ?
                                     <div className='hidden lg:block'>
-                                    <Button onClick={signOut} sx={{ color: 'white', display: 'block' }}>Sign_Out</Button>
+                                    <Button variant='contained' onClick={signOut} sx={{ color: 'white', display: 'block' }}>Sign_Out</Button>
                                     </div>
                                 :
                                     <div className='hidden lg:flex gap-4'>
@@ -223,21 +223,27 @@ function Navbar() {
 
                     </div>
                     {/* profile */}
+                    {
+                        user?.email && 
+                        <Link to='/auth/profile'>
+                            
                         <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center',gap:'1rem' }} >
 
-                            <Tooltip title={`${darkMode?'light':'dark'}`} onClick={() => setDarkMode(!darkMode)}>
-                                <IconButton sx={{ p: 0,color:'white' }}>
-                                {
-                                    darkMode ? <IoMdSunny className='w-7 h-7' /> : <IoMoon className='w-7 h-7' />
-                                }
-                                </IconButton>
-                            </Tooltip >
-                        <Tooltip title='profile'>
-                            <IconButton sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src={`${user?.photoURL}`} />
-                            </IconButton>
-                            </Tooltip>
-                    </Box>
+                                <Tooltip title={`${darkMode?'light':'dark'}`} onClick={() => setDarkMode(!darkMode)}>
+                                    <IconButton sx={{ p: 0,color:'white' }}>
+                                    {
+                                        darkMode ? <IoMdSunny className='w-7 h-7' /> : <IoMoon className='w-7 h-7' />
+                                    }
+                                    </IconButton>
+                                </Tooltip >
+                                <Tooltip title='profile'>
+                                    <IconButton sx={{ p: 0 }}>
+                                        <Avatar alt="Remy Sharp" src={`${user?.photoURL}`} />
+                                    </IconButton>
+                                </Tooltip>
+                        </Box>
+                        </Link>
+                    }
                     </div>
                 </Toolbar>
             </Container>
