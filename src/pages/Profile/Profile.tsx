@@ -9,10 +9,10 @@ export const Profile = () => {
       <div
         className="bg-cover bg-center h-48 flex items-center justify-center"
         style={{
-          backgroundImage: 'url(/images/about/about.jpg)',
+          backgroundImage: 'url(/images/profile.jpeg)',
         }}
       >
-        <h1 className="uppercase text-4xl font-bold text-black">Profile Page</h1>
+        <h1 className="uppercase text-4xl font-bold text-white">Profile Page</h1>
       </div>
       {/* Profile Card Section */}
       <div className="flex justify-center mt-8">
