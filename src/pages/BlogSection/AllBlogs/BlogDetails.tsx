@@ -72,7 +72,7 @@ const BlogDetails = () => {
         setUpdate(!afterUpdate)
     };
     return (
-        <Box className={`${darkMode ? 'dark' : ''} `}>
+        <Box className={`${darkMode ? 'dark' : ''} pt-10 lg:pt-12 `}>
             {
                 error?.length ?
                     <p className="text-center font-medium text-xl">{error}

@@ -17,12 +17,13 @@ const LatestBlogs = () => {
         const response = await axios.get(`${import.meta.env.VITE_server}/allBlog`)
         setLatestBlogs(response.data)
     }
-    const header =   <div className="text-center dark:text-white space-y-3">
+    const header = <div className="text-center dark:text-white space-y-3">
                 <h1 className="text-xl md:text-4xl font-medium">Explore Recent Blogs of this week</h1>
                 <p className="md:w-1/2 mx-auto">Effortlessly run your blog, solo or with a team. Customize everything — map a domain, subdomain, or use a company sub-path. Already loved by millions of devs worldwide.</p>
-            </div>
+    </div>
+
     return (
-        <div className="w-[95%] max-w-7xl mx-auto py-10 space-y-10">
+        <div className=" w-[95%] max-w-7xl mx-auto py-10 space-y-10 file:">
             <div>
 
               <CommonHeader header={header}/>

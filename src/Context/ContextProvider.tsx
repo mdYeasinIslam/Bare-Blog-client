@@ -38,8 +38,9 @@ const ContextProvider = ({ children }: ChildrenType) => {
             if (currentUser?.email) {
                 axios.post(`${import.meta.env.VITE_server}/jwt`,{ email: currentUser.email }, { withCredentials: true })
                     .then(response => {
-                        console.log(response)
-                        setLoading(false)
+                        if (response.status) {
+                            setLoading(false)
+                        }
                     }).catch(e => {
                         toast.error('token is not created')
                         console.log(e)

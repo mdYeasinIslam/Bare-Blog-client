@@ -18,10 +18,10 @@ import toast from 'react-hot-toast';
 import { IoMdSunny } from 'react-icons/io';
 import { IoMoon } from 'react-icons/io5';
 
-const pages = ['Home', 'Add_Blog', 'All_Blog', 'Featured_Blog', 'WishList'];
-const mobileMenu = ['Home', 'Add_Blog', 'All_Blog', 'Featured_Blog', 'WishList'];
+const pages = ['Home', 'Add_Blog', 'All_Blog', 'Featured_Blog', 'WishList','About'];
+const mobileMenu = ['Home', 'Add_Blog', 'All_Blog', 'Featured_Blog', 'WishList','About'];
 const authPages = ['Sign_In', 'Sign_Up']
-
+const signOut_page = ['Home','All_Blog','About']
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
     const { user, signOutAuth, setDarkMode, darkMode } = useContextHook()
@@ -29,7 +29,7 @@ function Navbar() {
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
-
+    
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
@@ -40,120 +40,159 @@ function Navbar() {
                 navigate('/sign_in')
                 toast.success('you are successfully loged out')
             })
-            .catch(e => {
+            .catch((e : any) => {
                
                 toast.error(e.message)
             })
     }
 
     return (
-        <AppBar position="static" className={`${darkMode ? 'dark' : ''} `}>
-            <Container maxWidth="xl" className={` dark:bg-[#1F2937]`} >
+    <section className={`${darkMode ? 'dark' : ''} mb-10 md:mb-16`}>     
+        <AppBar position="fixed" className={` dark:bg-[#1F2937]`}>
+            <Container maxWidth="xl"  >
                 <Toolbar disableGutters className={` flex justify-between items-center   `}>
 
-                    {/* Mobile device menu icons */}
                     <div className='flex items-center'>
 
-                    <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-                        <IconButton
-                            size="large"
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleOpenNavMenu}
-                            color="inherit"
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                        <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorElNav}
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                            }}
-                            open={Boolean(anchorElNav)}
-                            onClose={handleCloseNavMenu}
-                            sx={{ display: { xs: 'block', md: 'none' } }}
-                        >
-                            {mobileMenu.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <NavLink to={`${page.toLowerCase()}`}>
+                    {/* Mobile device menu icons */}
+                        <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+                            <IconButton
+                                size="large"
+                                aria-label="account of current user"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                onClick={handleOpenNavMenu}
+                                color="inherit"
+                            >
+                                <MenuIcon />
+                            </IconButton>
+                            <Menu
+                                id="menu-appbar"
+                                anchorEl={anchorElNav}
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'left',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'left',
+                                }}
+                                open={Boolean(anchorElNav)}
+                                onClose={handleCloseNavMenu}
+                                sx={{ display: { xs: 'block', md: 'none' } }}
+                            >
+                               
+                                {
+                                        user?.email ?
+                                        <>
+                                            {mobileMenu.map((page) => (
+                                                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                                                    <NavLink to={`/${page.toLowerCase()}`}>
 
-                                        <Typography sx={{ px: 2, py: 0.5, textAlign: 'center' }}>{page}</Typography>
-                                    </NavLink>
-                                </MenuItem>
-                            ))}
-                            {
-                                user ?
-                                    <>
-                                        <MenuItem className=' '>
-                                            <Button onClick={signOut} sx={{ px: 2, textAlign: 'center', color: 'black' }}
-                                                className='navbar-dark'
-                                            >Sign_Out</Button>
-                                        </MenuItem>
-                                    </>
-                                    :
-                                    <>
-                                        {authPages.map((page) => (
-                                            <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                                <NavLink to={`${page.toLowerCase()}`}>
+                                                        <Typography sx={{ px: 2, py: 0.5, textAlign: 'center' }}>{page}</Typography>
+                                                    </NavLink>
+                                                </MenuItem>
+                                            ))}
+                                        </>    
+                                        :
+                                        <>
+                                            {signOut_page.map((page) => (
+                                                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                                                    <NavLink to={`/${page.toLowerCase()}`}>
 
-                                                    <Typography sx={{ px: 2, py: 0.5, textAlign: 'center' }}>{page}</Typography>
-                                                </NavLink>
+                                                        <Typography sx={{ px: 2, py: 0.5, textAlign: 'center' }}>{page}</Typography>
+                                                    </NavLink>
+                                                </MenuItem>
+                                            ))}
+                                                
+                                        </>
+                                }
+                                {
+                                    user ?
+                                        <>
+                                            <MenuItem className=' '>
+                                                <Button onClick={signOut} sx={{ px: 2, textAlign: 'center', color: 'black' }}
+                                                    className='navbar-dark'
+                                                >Sign_Out</Button>
                                             </MenuItem>
-                                        ))}
-                                    </>
-                            }
+                                        </>
+                                        :
+                                        <>
+                                            {authPages.map((page) => (
+                                                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                                                    <NavLink to={`/auth/${page.toLowerCase()}`}>
+
+                                                        <Button variant='contained' sx={{ px: 2, py: 0.5, textAlign: 'center' }}>{page}</Button>
+                                                    </NavLink>
+                                                </MenuItem>
+                                            ))}
+                                        </>
+                                }
 
 
-                        </Menu>
-                    </Box>
+                            </Menu>
+                        </Box>
+                    {/* logo sectio for all device */}
+                        <div className=' flex items-center'>
+                            <NavLink to={`/`} className='flex items-center gap-1'>
+                                <ImBlogger className='w-7 h-7' />
+                                <Typography
+                                            variant="h6"
+                                    noWrap
+                                            component="a"
+                                    sx={{
+                                        mr: 2,
 
-                    <div className=' flex items-center'>
-                        <ImBlogger className='w-7 h-7' />
-                        <NavLink to={`/`}>
-                    <Typography
-                                variant="h6"
-                        noWrap
-                                component="a"
-                        sx={{
-                            mr: 2,
-
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            padding: ' 0 0 0 4px',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        BareBlog
-                    </Typography>
-                    </NavLink>
+                                        fontFamily: 'monospace',
+                                        fontWeight: 700,
+                                        letterSpacing: '.3rem',
+                                        padding: ' 0 0 0 4px',
+                                        color: 'inherit',
+                                        textDecoration: 'none',
+                                    }}
+                                >
+                                    BareBlog
+                                </Typography>
+                            </NavLink>
                         </div>
                         
                     </div>
-
+                
                     {/*Navbar middle portion and for lg: navIcons */}
 
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
-                            <NavLink to={`${page.toLowerCase()}`} key={page}>
-                            <Button
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent:'center',gap:{lg:2} }}>
+                        {
+                            user?.email ?
+                                <>
+                                {pages.map((page) => (
+                                    <NavLink to={`/${page.toLowerCase()}`} key={page}>
+                                    <Button
+        
+                                        onClick={handleCloseNavMenu}
+                                        sx={{ my: 2, color: 'white', display: 'block' }}
+                                    >
+                                        {page}
+                                    </Button>
+                                    </NavLink>
+                                ))}
+                                </>
+                                :
+                                <>
+                                     {signOut_page.map((page) => (
+                                    <NavLink to={`/${page.toLowerCase()}`} key={page}>
+                                    <Button
+        
+                                        onClick={handleCloseNavMenu}
+                                        sx={{ my: 2, color: 'white', display: 'block' }}
+                                    >
+                                        {page}
+                                    </Button>
+                                    </NavLink>
+                                ))}
+                                </>
 
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
-                                {page}
-                            </Button>
-                            </NavLink>
-                        ))}
+                        }
                     </Box>
 
                     {/* Navbar end portion */}
@@ -167,11 +206,11 @@ function Navbar() {
                                     <Button onClick={signOut} sx={{ color: 'white', display: 'block' }}>Sign_Out</Button>
                                     </div>
                                 :
-                                    <div className='hidden lg:flex'>
+                                    <div className='hidden lg:flex gap-4'>
                                     {authPages.map((page) => (
-                                        <NavLink to={`${page.toLowerCase()}`} key={page}>
+                                        <NavLink to={`/auth/${page.toLowerCase()}`} key={page} >
                                             <Button
-
+                                                variant='contained'
                                                 onClick={handleCloseNavMenu}
                                                 sx={{ color: 'white', display: 'block' }}
                                             >
@@ -203,6 +242,7 @@ function Navbar() {
                 </Toolbar>
             </Container>
         </AppBar>
+    </section>
     );
 }
 export default Navbar;

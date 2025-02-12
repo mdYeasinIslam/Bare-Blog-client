@@ -57,7 +57,7 @@ const SignUp = () => {
             })
     }
     return (
-        <div className={`flex flex-col-reverse md:grid grid-cols-2`}>
+        <div className={`container mx-auto flex flex-col-reverse md:grid grid-cols-2`}>
             <div className="flex  justify-center items-center ">
                 <div className={`bg-[#F3F4F6] dark:bg-[#1E293B] dark:text-white w-full mx-2 lg:mx-0 my-10 p-5 lg:w-[80%] xl:w-[60%] rounded-xl`}>
                     <h1 className=" text-2xl font-medium text-center my-5">Create Your Account</h1>

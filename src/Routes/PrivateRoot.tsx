@@ -19,7 +19,7 @@ const PrivateRoot = ({ children }: ChildrenType) => {
     if (user?.email) {
         return children
     }
-    return <Navigate to={'/sign_in'} state={location.pathname} replace/>
+    return <Navigate to={'/auth/sign_in'} state={location.pathname} replace/>
    
 };
 

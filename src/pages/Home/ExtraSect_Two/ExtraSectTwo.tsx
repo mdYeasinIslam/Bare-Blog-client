@@ -1,8 +1,9 @@
 import { Card, CardContent, Typography } from "@mui/material";
 
-const ExtraSectTwo= () => {
+const ExtraSectTwo = () => {
+
     return (
-        <Card className="max-w-4xl mx-auto my-10  md:h-72  flex flex-col md:flex-row shadow-md hover:shadow-lg transition-shadow bg-gray-100 duration-300 border">
+        <Card className={`max-w-4xl mx-5 lg:mx-auto my-10  md:h-72  flex flex-col md:flex-row shadow-md hover:shadow-lg transition-shadow bg-gray-100 duration-300 border `}>
           
             <div className="w-full ">
                 <img

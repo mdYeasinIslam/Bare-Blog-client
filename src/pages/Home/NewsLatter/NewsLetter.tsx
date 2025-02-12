@@ -1,8 +1,8 @@
-import { Button, TextField, Typography } from "@mui/material";
+import { Button,  Typography } from "@mui/material";
 import { FormEvent } from "react";
 import toast from "react-hot-toast";
-
 const Newsletter = () => {
+
     const emailHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const email = e.currentTarget.email.value as string
@@ -12,7 +12,7 @@ const Newsletter = () => {
         }
     }
     return (
-        <div className="px-4 py-12 bg-gray-100">
+        <div className="px-4 py-12 ">
             <div className="max-w-4xl mx-auto text-center">
                 <Typography variant="h4" className="font-bold mb-4">
                     Subscribe to Our Newsletter
@@ -22,12 +22,13 @@ const Newsletter = () => {
                 </Typography>
 
                 <form onSubmit={emailHandler} className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                    <TextField
-                        variant="outlined"
+                    <input
+                        // variant="outlined"
                         placeholder="Enter your email"
                         type="email"
                         name="email"
-                        className="w-full sm:w-2/3"
+                        
+                        className={`w-full sm:w-2/3 p-2 rounded-md dark:bg-slate-200 dark:text-white`}
                         required
                     />
                     <Button

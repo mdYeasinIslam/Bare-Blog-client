@@ -10,6 +10,8 @@ import Wishlists from "../pages/BlogSection/Wishlist/Wishlists";
 import ErrorHandler from "../Component/ErrorHandler/ErrorHandler";
 import PrivateRoot from "./PrivateRoot";
 import BlogDetails from "../pages/BlogSection/AllBlogs/BlogDetails";
+import { SecondLayout } from "../pages/Layout/SecondLayout";
+import About from "../pages/About/About";
 
 const Root = () => {
     const routes = createBrowserRouter([
@@ -48,13 +50,25 @@ const Root = () => {
                     path: '/wishlist',
                       element: <PrivateRoot><Wishlists /></PrivateRoot>
                 },
-                
                 {
-                    path: "/sign_in",
+                    path: 'about',
+                    element:<About/>
+                  }
+                
+               
+            ]
+        },
+        {
+            path: '/auth',
+            element: <SecondLayout />,
+            errorElement: <ErrorHandler />,
+            children: [
+                 {
+                    path: "/auth/sign_in",
                     element:<SignIn/>
                 },
                 {
-                    path: '/sign_up',
+                    path: '/auth/sign_up',
                     element:<SignUp/>
                 }
             ]

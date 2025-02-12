@@ -43,23 +43,24 @@ const DisplayBlog = ({ blog, idx }: Prop) => {
                     alt="Paella dish"
                 />
                 </div>
-                <article  className="absolute top-0 left-5">
+                <article  className="absolute top-0 left-5 flex flex-col justify-center  h-full">
                 <CardContent className="text-slate-200 space-y-3">
                         <h1 className="text-xl md:text-2xl lg:text-3xl font-medium">{title}</h1>
                         <p className="text-xl font-medium">{author}</p>
                         <p>{content.slice(0,100)}</p>
                 </CardContent>
-                    <CardActions disableSpacing className=" flex gap-5 ">
-                        <Link to={`/all_blog/${_id}`}>
-                              <Button className={`transform transition-transform  duration-500 hover:scale-105 `} variant="contained" endIcon={<SendIcon />}>
-                           Read More
-                        </Button>   
-                        </Link>
-                    
-                        <Button onClick={addToWishlist} className={`transform transition-transform  duration-1000 hover:scale-105 ${disable && 'cursor-not-allowed'}`} variant="contained" endIcon={<FavoriteIcon/>} >
-                           Add Wishlist
-                        </Button> 
-                        
+                <CardActions disableSpacing className=" h-full flex gap-x-5 items-end  ">
+                  
+                     <Link to={`/all_blog/${_id}`}>
+                            <Button className={`transform transition-transform  duration-500 hover:scale-105 `} variant="contained" endIcon={<SendIcon />}>
+                        Read More
+                    </Button>   
+                    </Link>
+                 
+                     <Button onClick={addToWishlist} className={`transform transition-transform  duration-1000 hover:scale-105 ${disable && 'cursor-not-allowed'}`} variant="contained" endIcon={<FavoriteIcon/>} >
+                        Add Wishlist
+                    </Button> 
+                   
                 </CardActions>
                 </article>
             </Card>

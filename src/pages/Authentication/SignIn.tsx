@@ -42,7 +42,7 @@ const handleClickShowPassword = () => setShowPassword((show) => !show);
             })
 }
     return (
-        <div className={`flex flex-col-reverse md:grid md:grid-cols-2 ${darkMode ? 'dark' : ''}`}>
+        <div className={`container mx-auto flex flex-col-reverse md:grid md:grid-cols-2 ${darkMode ? 'dark' : ''}`}>
             <div className="flex justify-center items-center my-10 ">
                 <div className={`bg-[#F3F4F6] dark:bg-[#1E293B] dark:text-white mx-2 lg:mx-0 p-5 xl:w-[60%] rounded-xl`}>
                     <h1 className=" text-2xl font-medium text-center my-5">Please Log In your account</h1>

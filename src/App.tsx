@@ -9,7 +9,7 @@ function App() {
 
   return (
     <div className={`${darkMode ? 'dark' : ''} `}>
-      <div className='dark:bg-[#111827]'>
+      <div className='dark:bg-[#111827] bg-[#f1f5fa] dark:text-white'>
       <Root />
       <Toaster />
       </div>
